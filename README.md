@@ -1,5 +1,7 @@
-ESP32 Battery-Powered Distance Sensor with Digital Filter Analysis
-Complete embedded systems project featuring a VL53L0X ToF distance sensor (100-1200mm range) with real-time LCD display and PWM LED proximity indicator. Includes empirical comparison of Moving Average vs. Exponential Moving Average filters for noise reduction in stationary measurements.
+ESP32 Battery-Powered Distance Sensor w/ Digital Filter Analysis
+
+Complete embedded systems project featuring a VL53L0X ToF distance sensor (100-1200mm range) with real-time LCD display and PWM LED proximity indicator. Includes comparison of Moving Average vs. Exponential Moving Average filters for noise reduction in stationary measurements.
+
 Key Features:
 
 Custom ESP32 firmware (C++) with I2C communication and PWM control
