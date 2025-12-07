@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Data from your test results
+# test lengths (in mm)
 distances = np.array([100, 320, 540, 760, 980, 1200])
 
 # RAW DATA
@@ -18,17 +18,17 @@ ema_mean = np.array([96.7, 330.3, 544.4, 740.4, 910.2, 1071.8])
 ema_stddev = np.array([3.5, 1.6, 1.4, 2.5, 4.6, 6.6])
 ema_reduction = np.array([25.9, 39.0, 60.8, 55.5, 53.1, 47.0])
 
-# Create figure with 3 subplots
+# figure w 3 subplots
 fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 fig.suptitle('ESP32 Distance Sensor: Filter Performance Comparison', 
              fontsize=16, fontweight='bold', y=1.02)
 
-# Color scheme
-raw_color = '#E74C3C'      # Red
-ma_color = '#3498DB'       # Blue
-ema_color = '#2ECC71'      # Green
+# colors
+raw_color = '#E74C3C'      # r
+ma_color = '#3498DB'       # b
+ema_color = '#2ECC71'      # g
 
-# ---------- SUBPLOT 1: Standard Deviation vs Distance ----------
+# Standard Deviation vs Distance 
 ax1 = axes[0]
 ax1.plot(distances, raw_stddev, 'o-', linewidth=2.5, markersize=8, 
          color=raw_color, label='Raw Data', alpha=0.8)
@@ -45,14 +45,14 @@ ax1.grid(True, alpha=0.3, linestyle='--')
 ax1.set_xlim(50, 1250)
 ax1.set_ylim(0, 14)
 
-# Add annotation
+# annotation
 ax1.annotate('Noise increases\nwith distance', 
             xy=(1200, 12.7), xytext=(900, 11),
             arrowprops=dict(arrowstyle='->', color='black', lw=1.5),
             fontsize=10, ha='center',
             bbox=dict(boxstyle='round,pad=0.5', facecolor='yellow', alpha=0.3))
 
-# ---------- SUBPLOT 2: Variance Reduction % ----------
+# SUBPLOT 2: Variance Reduction % 
 ax2 = axes[1]
 
 x_pos = np.arange(len(distances))
@@ -72,22 +72,22 @@ ax2.legend(fontsize=10, framealpha=0.95)
 ax2.grid(True, alpha=0.3, linestyle='--', axis='y')
 ax2.set_ylim(0, 70)
 
-# Add average reduction line
+# average reduction line
 ma_avg = ma_reduction.mean()
 ema_avg = ema_reduction.mean()
 ax2.axhline(y=ma_avg, color=ma_color, linestyle='--', linewidth=2, alpha=0.5)
 ax2.axhline(y=ema_avg, color=ema_color, linestyle='--', linewidth=2, alpha=0.5)
 
-# Add text labels for averages
+# text labels for averages
 ax2.text(-1.0, ma_avg + 2, f'MA Avg: {ma_avg:.1f}%', 
          fontsize=10, fontweight='bold', color=ma_color, ha='left')
 ax2.text(-1.0, ema_avg - 2, f'EMA Avg: {ema_avg:.1f}%', 
          fontsize=10, fontweight='bold', color=ema_color, ha='left')
 
-# ---------- SUBPLOT 3: Accuracy (Mean vs Target) ----------
+# SUBPLOT 3: Accuracy (Mean vs Target)
 ax3 = axes[2]
 
-# Calculate error percentages
+# error percentages
 raw_error = np.abs(raw_mean - distances) / distances * 100
 ma_error = np.abs(ma_mean - distances) / distances * 100
 ema_error = np.abs(ema_mean - distances) / distances * 100
@@ -99,7 +99,7 @@ ax3.plot(distances, ma_error, 's-', linewidth=2.5, markersize=8,
 ax3.plot(distances, ema_error, '^-', linewidth=2.5, markersize=8, 
          color=ema_color, label='EMA', alpha=0.8)
 
-# Add ±10% requirement line
+# ±10% requirement line
 ax3.axhline(y=10, color='red', linestyle='--', linewidth=2, alpha=0.5, label='±10% Requirement')
 
 ax3.set_xlabel('Target Distance (mm)', fontsize=12, fontweight='bold')
@@ -110,24 +110,23 @@ ax3.grid(True, alpha=0.3, linestyle='--')
 ax3.set_xlim(50, 1250)
 ax3.set_ylim(0, 16)
 
-# Add annotation
+# annotation
 ax3.annotate('All filters meet\naccuracy requirement', 
             xy=(1200, 10.7), xytext=(800, 13),
             arrowprops=dict(arrowstyle='->', color='black', lw=1.5),
             fontsize=10, ha='center',
             bbox=dict(boxstyle='round,pad=0.5', facecolor='lightgreen', alpha=0.5))
 
-# Adjust layout to prevent overlap
+# prevent overlap
 plt.tight_layout()
 
-# Save high-resolution figure
+# save
 plt.savefig('filter_comparison_analysis.png', dpi=300, bbox_inches='tight', 
             facecolor='white', edgecolor='none')
 
-# Display
 plt.show()
 
-# Print summary statistics
+# print summary statistics
 print("\n" + "="*60)
 print("FILTER PERFORMANCE SUMMARY")
 print("="*60)
